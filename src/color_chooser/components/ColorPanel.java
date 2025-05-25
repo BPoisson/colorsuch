@@ -13,8 +13,6 @@ public class ColorPanel extends JPanel {
         colorMaker = new ColorMaker();
         color = nextColor();
 
-        System.out.println(color);
-
         setPreferredSize(new Dimension(400, 400));
     }
 

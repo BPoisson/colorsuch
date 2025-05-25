@@ -8,29 +8,32 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        ColorPanel colorPanel = new ColorPanel();
-        ColorChooser colorChooser = new ColorChooser();
-        TextPanel textPanel = new TextPanel();
-        ButtonPanel buttonPanel = new ButtonPanel(colorPanel, colorChooser, textPanel);
+        SwingUtilities.invokeLater(() -> {
+            ColorPanel colorPanel = new ColorPanel();
+            ColorChooser colorChooser = new ColorChooser();
+            TextPanel textPanel = new TextPanel();
+            ButtonPanel buttonPanel = new ButtonPanel(colorPanel, colorChooser, textPanel);
 
-        JPanel colorPanelHolder = new JPanel();
-        colorPanelHolder.add(colorPanel);
+            JPanel rightPanel = new JPanel(new BorderLayout());
+            rightPanel.setPreferredSize(new Dimension(250, 400));
+            rightPanel.add(colorChooser.getPanel(), BorderLayout.CENTER);
+            rightPanel.add(textPanel, BorderLayout.SOUTH);
 
-        JPanel colorChooserHolder = new JPanel();
-        colorChooserHolder.setLayout(new BoxLayout(colorChooserHolder, BoxLayout.Y_AXIS));
-        colorChooserHolder.add(colorChooser.getPanel());
-        colorChooserHolder.add(textPanel, BorderLayout.WEST);
+            JPanel buttonHolder = new JPanel(new BorderLayout());
+            buttonHolder.add(buttonPanel.getPanel(), BorderLayout.CENTER);
 
-        JPanel buttonHolder = new JPanel();
-        buttonHolder.add(buttonPanel.getPanel());
+            JFrame jFrame = new JFrame("ColorSuch");
+            jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            jFrame.setLayout(new BorderLayout());
 
-        JFrame jFrame = new JFrame("Color Matching");
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.add(colorPanelHolder, BorderLayout.WEST);
-        jFrame.add(colorChooserHolder, BorderLayout.EAST);
-        jFrame.add(buttonHolder, BorderLayout.SOUTH);
-        jFrame.pack();
-        jFrame.setLocationRelativeTo(null);
-        jFrame.setVisible(true);
+            jFrame.add(colorPanel, BorderLayout.CENTER);
+            jFrame.add(rightPanel, BorderLayout.EAST);
+            jFrame.add(buttonHolder, BorderLayout.SOUTH);
+
+            jFrame.setSize(800, 600);
+            jFrame.setLocationRelativeTo(null);
+            jFrame.setVisible(true);
+        });
     }
+
 }
