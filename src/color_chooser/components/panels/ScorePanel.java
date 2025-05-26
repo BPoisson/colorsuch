@@ -4,7 +4,6 @@ import color_chooser.components.labels.OutlinedLabel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class ScorePanel extends JPanel {
     int boxDimension;
@@ -15,13 +14,10 @@ public class ScorePanel extends JPanel {
         boxDimension = 30;
         attemptCounter = 0;
         scorePanel = new JPanel();
+        scorePanel.setPreferredSize(new Dimension(boxDimension * 10, boxDimension));
     }
 
     public JPanel build() {
-        Random rand = new Random();
-        for (int i = 0; i < 10; i++) {
-            addAttempt(0, new float[] {rand.nextFloat(), rand.nextFloat(), rand.nextFloat()});
-        }
         return scorePanel;
     }
 

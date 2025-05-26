@@ -2,6 +2,7 @@ package color_chooser.components.panels;
 
 import color_chooser.ColorChooser;
 import color_chooser.components.buttons.ButtonPanel;
+import managers.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,13 +19,13 @@ public class PanelManager {
     JPanel buttonHolder;
     JFrame jFrame;
 
-    public PanelManager() {
+    public PanelManager(GameManager gameManager) {
         colorPanel = new ColorPanel();
         colorChooser = new ColorChooser();
         textPanel = new TextPanel();
         attemptPanel = new AttemptPanel();
         scorePanel = new ScorePanel();
-        buttonPanel = new ButtonPanel(colorPanel, colorChooser, textPanel, attemptPanel, scorePanel);
+        buttonPanel = new ButtonPanel(gameManager, colorPanel, colorChooser, textPanel);
         leftPanel = new JPanel(new BorderLayout());
         rightPanel = new JPanel(new BorderLayout());
         buttonHolder = new JPanel(new BorderLayout());
@@ -49,10 +50,26 @@ public class PanelManager {
             jFrame.add(rightPanel, BorderLayout.EAST);
             jFrame.add(buttonHolder, BorderLayout.SOUTH);
 
-//            jFrame.setSize(1000, 600);
             jFrame.pack();
             jFrame.setLocationRelativeTo(null);
             jFrame.setVisible(true);
         });
     }
+
+    public AttemptPanel getAttemptPanel() {
+        return attemptPanel;
+    }
+
+    public TextPanel getTextPanel() {
+        return textPanel;
+    }
+
+    public ButtonPanel getButtonPanel() {
+        return buttonPanel;
+    }
+
+    public ScorePanel getScorePanel() {
+        return scorePanel;
+    }
+
 }

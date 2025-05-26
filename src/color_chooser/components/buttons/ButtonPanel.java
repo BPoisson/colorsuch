@@ -1,39 +1,39 @@
 package color_chooser.components.buttons;
 
 import color_chooser.ColorChooser;
-import color_chooser.components.panels.AttemptPanel;
 import color_chooser.components.panels.ColorPanel;
 import color_chooser.components.panels.ScorePanel;
 import color_chooser.components.panels.TextPanel;
+import managers.GameManager;
 
 import javax.swing.*;
 
 public class ButtonPanel extends JPanel {
+    GameManager gameManager;
     JButton nextButton;
     JButton submitButton;
     ColorPanel colorPanel;
     ColorChooser colorChooser;
     TextPanel textPanel;
-    AttemptPanel attemptPanel;
 
-    public ButtonPanel(ColorPanel colorPanel, ColorChooser colorChooser, TextPanel textPanel, AttemptPanel attemptPanel, ScorePanel scorePanel) {
+    public ButtonPanel(GameManager gameManager, ColorPanel colorPanel, ColorChooser colorChooser, TextPanel textPanel) {
         nextButton = new JButton("Next Color");
         submitButton = new JButton("Submit");
         this.colorPanel = colorPanel;
         this.colorChooser = colorChooser;
         this.textPanel = textPanel;
-        this.attemptPanel = attemptPanel;
+        this.gameManager = gameManager;
 
         nextButton.addActionListener(_ -> {
             textPanel.disableText();
             colorPanel.disableRectangle();
             colorPanel.nextColor();
-            attemptPanel.resetAttempts();
+            gameManager.resetAttempts();
         });
         submitButton.addActionListener(_ -> {
             colorPanel.setRectangle(colorChooser.getColorHSB());
             textPanel.createText(colorPanel.getColorHSB(), colorChooser.getColorHSB());
-            attemptPanel.submitAttempt(colorChooser.getColorHSB());
+            gameManager.submitAttempt(colorPanel.getColorHSB(), colorChooser.getColorHSB());
         });
     }
 
@@ -44,5 +44,13 @@ public class ButtonPanel extends JPanel {
         jPanel.add(submitButton);
 
         return jPanel;
+    }
+
+    public void disableSubmitButton() {
+        submitButton.setEnabled(false);
+    }
+
+    public void enableSubmitButton() {
+        submitButton.setEnabled(true);
     }
 }

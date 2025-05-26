@@ -1,3 +1,5 @@
+package managers;
+
 public class GameRound {
     int score;
     float[] chosenColorHSB;
