@@ -2,7 +2,6 @@ package color_chooser.components.buttons;
 
 import color_chooser.ColorChooser;
 import color_chooser.components.panels.ColorPanel;
-import color_chooser.components.panels.ScorePanel;
 import color_chooser.components.panels.TextPanel;
 import managers.GameManager;
 
@@ -10,21 +9,23 @@ import javax.swing.*;
 
 public class ButtonPanel extends JPanel {
     GameManager gameManager;
-    JButton nextButton;
+    JButton nextColorButton;
     JButton submitButton;
     ColorPanel colorPanel;
     ColorChooser colorChooser;
     TextPanel textPanel;
 
     public ButtonPanel(GameManager gameManager, ColorPanel colorPanel, ColorChooser colorChooser, TextPanel textPanel) {
-        nextButton = new JButton("Next Color");
+        nextColorButton = new JButton("Next Color");
+        disableNextColorButton();
         submitButton = new JButton("Submit");
         this.colorPanel = colorPanel;
         this.colorChooser = colorChooser;
         this.textPanel = textPanel;
         this.gameManager = gameManager;
 
-        nextButton.addActionListener(_ -> {
+        nextColorButton.addActionListener(_ -> {
+            disableNextColorButton();
             textPanel.disableText();
             colorPanel.disableRectangle();
             colorPanel.nextColor();
@@ -40,10 +41,18 @@ public class ButtonPanel extends JPanel {
     public JPanel getPanel() {
         JPanel jPanel = new JPanel();
 
-        jPanel.add(nextButton);
+        jPanel.add(nextColorButton);
         jPanel.add(submitButton);
 
         return jPanel;
+    }
+
+    public void disableNextColorButton() {
+        nextColorButton.setEnabled(false);
+    }
+
+    public void enableNextColorButton() {
+        nextColorButton.setEnabled(true);
     }
 
     public void disableSubmitButton() {

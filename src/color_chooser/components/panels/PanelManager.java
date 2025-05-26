@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelManager {
+    GameManager gameManager;
     ColorPanel colorPanel;
     ColorChooser colorChooser;
     TextPanel textPanel;
@@ -20,6 +21,7 @@ public class PanelManager {
     JFrame jFrame;
 
     public PanelManager(GameManager gameManager) {
+        this.gameManager = gameManager;
         colorPanel = new ColorPanel();
         colorChooser = new ColorChooser();
         textPanel = new TextPanel();
@@ -72,4 +74,12 @@ public class PanelManager {
         return scorePanel;
     }
 
+    public void resetAll() {
+        attemptPanel.reset();
+        scorePanel.reset();
+        colorPanel.nextColor();
+        textPanel.disableText();
+        buttonPanel.disableNextColorButton();
+        buttonPanel.enableSubmitButton();
+    }
 }

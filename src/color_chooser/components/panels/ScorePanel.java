@@ -33,7 +33,14 @@ public class ScorePanel extends JPanel {
         scorePanel.repaint();
     }
 
-    public void writeScore() {
+    public void reset() {
+        scorePanel.removeAll();
+        attemptCounter = 0;
+        scorePanel.repaint();
+    }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 }
