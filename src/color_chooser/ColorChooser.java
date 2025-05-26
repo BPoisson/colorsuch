@@ -1,6 +1,6 @@
 package color_chooser;
 
-import color_chooser.components.SatValBox;
+import color_chooser.components.panels.SatValBox;
 import color_chooser.components.sliders.GradientSliderUI;
 import color_chooser.components.sliders.HueSlider;
 import color_chooser.components.sliders.SaturationSlider;
@@ -40,7 +40,7 @@ public class ColorChooser {
 
     private JPanel buildPanel() {
         JPanel colorChooserPanel = new JPanel();
-        colorChooserPanel.add(satValBox);
+        colorChooserPanel.add(satValBox, BorderLayout.WEST);
 
         JPanel sliderPanel = new JPanel();
         sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
@@ -60,7 +60,7 @@ public class ColorChooser {
         }});
         sliderPanel.add(brightnessSlider);
 
-        colorChooserPanel.add(sliderPanel);
+        colorChooserPanel.add(sliderPanel, BorderLayout.EAST);
 
         return colorChooserPanel;
     }
