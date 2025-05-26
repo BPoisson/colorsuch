@@ -8,16 +8,22 @@ import managers.GameManager;
 import javax.swing.*;
 
 public class ButtonPanel extends JPanel {
+    int skips;
+    boolean skip;
+    final int MAX_SKIPS = 2;
     GameManager gameManager;
     JButton nextColorButton;
     JButton submitButton;
     ColorPanel colorPanel;
     ColorChooser colorChooser;
     TextPanel textPanel;
+    String nextColorButtonText;
 
     public ButtonPanel(GameManager gameManager, ColorPanel colorPanel, ColorChooser colorChooser, TextPanel textPanel) {
-        nextColorButton = new JButton("Next Color");
-        disableNextColorButton();
+        skips = MAX_SKIPS;
+        skip = true;
+        nextColorButtonText = "Next Color";
+        nextColorButton = new JButton(getNextColorButtonText());
         submitButton = new JButton("Submit");
         this.colorPanel = colorPanel;
         this.colorChooser = colorChooser;
@@ -25,11 +31,7 @@ public class ButtonPanel extends JPanel {
         this.gameManager = gameManager;
 
         nextColorButton.addActionListener(_ -> {
-            disableNextColorButton();
-            textPanel.disableText();
-            colorPanel.disableRectangle();
-            colorPanel.nextColor();
-            gameManager.resetAttempts();
+            handleNextColorButtonClick();
         });
         submitButton.addActionListener(_ -> {
             colorPanel.setRectangle(colorChooser.getColorHSB());
@@ -47,6 +49,23 @@ public class ButtonPanel extends JPanel {
         return jPanel;
     }
 
+    private void handleNextColorButtonClick() {
+        textPanel.disableText();
+        colorPanel.disableRectangle();
+        colorPanel.nextColor();
+        gameManager.resetAttempts();
+
+        if (skip) {
+            skips--;
+            gameManager.skipUsed();
+        }
+        if (skips == 0) {
+            disableNextColorButton();
+        }
+        nextColorButton.setText(getNextColorButtonText());
+        skip = true;
+    }
+
     public void disableNextColorButton() {
         nextColorButton.setEnabled(false);
     }
@@ -61,5 +80,22 @@ public class ButtonPanel extends JPanel {
 
     public void enableSubmitButton() {
         submitButton.setEnabled(true);
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
+
+    public void reset() {
+        skip = true;
+        skips = MAX_SKIPS;
+        nextColorButton.setText(getNextColorButtonText());
+
+        enableSubmitButton();
+        enableNextColorButton();
+    }
+
+    private String getNextColorButtonText() {
+        return String.format("%s (Skips %d)", nextColorButtonText, skips);
     }
 }

@@ -6,6 +6,7 @@ import data_structures.Pair;
 import javax.swing.*;
 
 public class GameManager {
+    int skipsUsed;
     int maxRounds;
     int roundIndex;
     int totalScore;
@@ -14,6 +15,7 @@ public class GameManager {
     AttemptManager attemptManager;
 
     public GameManager() {
+        skipsUsed = 0;
         maxRounds = 10;
         roundIndex = 0;
         totalScore = 0;
@@ -35,6 +37,7 @@ public class GameManager {
             panelManager.getButtonPanel().disableSubmitButton();
             panelManager.getScorePanel().addAttempt(attemptResult.getValue(), panelColorHSB);
             gameOver = addRound(attemptResult.getValue(), choiceColorHSB);
+            panelManager.getButtonPanel().setSkip(false);
             panelManager.getButtonPanel().enableNextColorButton();
         }
 
@@ -68,5 +71,9 @@ public class GameManager {
         attemptManager.resetAttempts();
 
         panelManager.resetAll();
+    }
+
+    public void skipUsed() {
+        skipsUsed++;
     }
 }

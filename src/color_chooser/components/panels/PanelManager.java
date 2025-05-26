@@ -79,7 +79,7 @@ public class PanelManager {
         scorePanel.reset();
         colorPanel.nextColor();
         textPanel.disableText();
-        buttonPanel.disableNextColorButton();
         buttonPanel.enableSubmitButton();
+        buttonPanel.reset();
     }
 }
