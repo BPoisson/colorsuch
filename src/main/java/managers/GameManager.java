@@ -18,7 +18,7 @@ public class GameManager {
 
     public GameManager() {
         skipsUsed = 0;
-        maxRounds = 3;
+        maxRounds = 5;
         roundIndex = 0;
         totalScore = 0;
         rounds = new Round[maxRounds];
@@ -62,7 +62,7 @@ public class GameManager {
     }
 
     private void handleGameOver() {
-        JOptionPane.showMessageDialog(null, "Game Over.\nAverage Score: " + (totalScore / maxRounds));
+        JOptionPane.showMessageDialog(null, String.format("Game Over.\nAverage Score: %.2f.", (float) totalScore / maxRounds));
         scoreManager.saveRound(rounds);
 
         resetGame();

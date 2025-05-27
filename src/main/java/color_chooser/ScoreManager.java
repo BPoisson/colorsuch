@@ -21,6 +21,7 @@ public class ScoreManager {
     private static final String colorHKey = "ColorH";
     private static final String colorSKey = "ColorS";
     private static final String colorBKey = "ColorB";
+    private static final String averageScoreKey = "AverageScore";
 
     public ScoreManager() {}
 
@@ -55,6 +56,7 @@ public class ScoreManager {
     }
 
     private JSONObject createGameJSON(Round[] rounds, JSONObject savedJSON) {
+        float totalScore = 0;
         JSONObject gamesJSON = new JSONObject();
         JSONObject gameJSON = new JSONObject();
         JSONArray gamesArray = getPreviousGames(savedJSON);
@@ -63,6 +65,7 @@ public class ScoreManager {
         for (int i = 0; i < rounds.length; i++) {
             Round round = rounds[i];
             float[] chosenColorHSB = round.getChosenColorHSB();
+            totalScore += round.getScore();
 
             JSONObject roundJSON = new JSONObject();
             roundJSON.put(roundKey, i + 1);
@@ -75,6 +78,7 @@ public class ScoreManager {
         }
         gameJSON.put(gameKey, gamesArray.length() + 1);
         gameJSON.put(dateKey, Date.from(Instant.now()));
+        gameJSON.put(averageScoreKey, totalScore / rounds.length);
         gameJSON.put(roundsKey, roundJSONArray);
         gamesArray.put(gameJSON);
         gamesJSON.put(gamesKey, gamesArray);

@@ -36,17 +36,78 @@ public class TextPanel extends JPanel {
 
         if (hueDiffAbs <= 2) {
             return "Hue Perfect!\n";
-        } else if (hueDiffAbs <= 50) {
+        } else if (hueDiffAbs <= 15) {
+            return "A bit more " + nextColorName + "\n";
+        } else if (hueDiffAbs <= 60) {
             return "A little more " + nextColorName + "\n";
-        } else if (hueDiffAbs <= 150) {
+        } else if (hueDiffAbs <= 120) {
             return "More " + nextColorName + "\n";
         } else {
             return "Much more " + nextColorName + "\n";
         }
     }
 
-    public String getNextColorName(int panelHue, int chosenHue){
-        int nextColorHue = panelHue < chosenHue ? (chosenHue - 15) % 360 : (chosenHue + 15) % 360;
+    public String getSaturationText(int panelSaturation, int chosenSaturation) {
+        int saturationDiff = panelSaturation - chosenSaturation;
+        int saturationDiffAbs = Math.abs(saturationDiff);
+
+        if (saturationDiffAbs == 0) {
+            return "Saturation Perfect!\n";
+        } else if (saturationDiffAbs <= 3) {
+            if (saturationDiff < 0) {
+                return "A bit too saturated.\n";
+            }
+            return "A bit too unsaturated.\n";
+        } else if (saturationDiffAbs <= 10) {
+            if (saturationDiff < 0) {
+                return "A little too saturated.\n";
+            }
+            return "A little too unsaturated.\n";
+        } else if (saturationDiffAbs <= 50) {
+            if (saturationDiff < 0) {
+                return "Too saturated.\n";
+            }
+            return "Too unsaturated.\n";
+        } else {
+            if (saturationDiff < 0) {
+                return "Much too saturated.\n";
+            }
+            return "Much too unsaturated.\n";
+        }
+    }
+
+    public String getBrightnessText(int panelBrightness, int chosenBrightness) {
+        int brightnessDiff = panelBrightness - chosenBrightness;
+        int brightnessDiffAbs = Math.abs(brightnessDiff);
+
+        if (brightnessDiffAbs == 0) {
+            return "Brightness Perfect!\n";
+        } else if (brightnessDiffAbs <= 3) {
+            if (brightnessDiff < 0) {
+                return "A bit too bright.\n";
+            }
+            return "A bit too dark.\n";
+        } else if (brightnessDiffAbs <= 10) {
+            if (brightnessDiff < 0) {
+                return "A little too bright.\n";
+            }
+            return "A little too dark.\n";
+        } else if (brightnessDiffAbs <= 50) {
+            if (brightnessDiff < 0) {
+                return "Too bright.\n";
+            }
+            return "Too dark.\n";
+        } else {
+            if (brightnessDiff < 0) {
+                return "Much too bright.\n";
+            }
+            return "Much too dark.\n";
+        }
+    }
+
+    public String getNextColorName(int panelHue, int chosenHue) {
+        int hueOffset = getHueOffset(panelHue, chosenHue);
+        int nextColorHue = panelHue < chosenHue ? (chosenHue - hueOffset) % 360 : (chosenHue + hueOffset) % 360;
 
         if (nextColorHue < 15 || nextColorHue >= 345) {
             return "Red";
@@ -75,51 +136,18 @@ public class TextPanel extends JPanel {
         }
     }
 
-    public String getSaturationText(int panelSaturation, int chosenSaturation) {
-        int saturationDiff = panelSaturation - chosenSaturation;
-        int saturationDiffAbs = Math.abs(saturationDiff);
+    private int getHueOffset(int panelHue, int chosenHue) {
+        int hueDiff = panelHue - chosenHue;
+        int hueDiffAbs = Math.abs(hueDiff);
 
-        if (saturationDiffAbs == 0) {
-            return "Saturation Perfect!\n";
-        } else if (saturationDiffAbs <= 10) {
-            if (saturationDiff < 0) {
-                return "A little too saturated.\n";
-            }
-            return "A little too unsaturated.\n";
-        } else if (saturationDiffAbs <= 50) {
-            if (saturationDiff < 0) {
-                return "Too saturated.\n";
-            }
-            return "Too unsaturated.\n";
+        if (hueDiffAbs <= 30) {
+            return 15;
+        } else if (hueDiffAbs <= 60) {
+            return 30;
+        } else if (hueDiffAbs <= 120){
+            return 60;
         } else {
-            if (saturationDiff < 0) {
-                return "Much too saturated.\n";
-            }
-            return "Much too unsaturated.\n";
-        }
-    }
-
-    public String getBrightnessText(int panelBrightness, int chosenBrightness) {
-        int brightnessDiff = panelBrightness - chosenBrightness;
-        int brightnessDiffAbs = Math.abs(brightnessDiff);
-
-        if (brightnessDiffAbs == 0) {
-            return "Brightness Perfect!\n";
-        } else if (brightnessDiffAbs <= 10) {
-            if (brightnessDiff < 0) {
-                return "A little too bright.\n";
-            }
-            return "A little too dark.\n";
-        } else if (brightnessDiffAbs <= 50) {
-            if (brightnessDiff < 0) {
-                return "Too bright.\n";
-            }
-            return "Too dark.\n";
-        } else {
-            if (brightnessDiff < 0) {
-                return "Much too bright.\n";
-            }
-            return "Much too dark.\n";
+            return 120;
         }
     }
 
