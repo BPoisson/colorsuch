@@ -1,4 +1,6 @@
-package color_chooser.components.panels;
+package components.panels;
+
+import constants.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +36,7 @@ public class TextPanel extends JPanel {
         int hueDiffAbs = Math.abs(hueDiff);
         String nextColorName = getNextColorName(panelHue, chosenHue);
 
-        if (hueDiffAbs <= 2) {
+        if (hueDiffAbs <= Constants.PERFECT_HUE_DIFF) {
             return "Hue Perfect!\n";
         } else if (hueDiffAbs <= 15) {
             return "A bit more " + nextColorName + "\n";
@@ -51,7 +53,7 @@ public class TextPanel extends JPanel {
         int saturationDiff = panelSaturation - chosenSaturation;
         int saturationDiffAbs = Math.abs(saturationDiff);
 
-        if (saturationDiffAbs == 0) {
+        if (saturationDiffAbs <= Constants.PERFECT_SATURATION_DIFF) {
             return "Saturation Perfect!\n";
         } else if (saturationDiffAbs <= 3) {
             if (saturationDiff < 0) {
@@ -80,7 +82,7 @@ public class TextPanel extends JPanel {
         int brightnessDiff = panelBrightness - chosenBrightness;
         int brightnessDiffAbs = Math.abs(brightnessDiff);
 
-        if (brightnessDiffAbs == 0) {
+        if (brightnessDiffAbs <= Constants.PERFECT_BRIGHTNESS_DIFF) {
             return "Brightness Perfect!\n";
         } else if (brightnessDiffAbs <= 3) {
             if (brightnessDiff < 0) {
@@ -109,8 +111,8 @@ public class TextPanel extends JPanel {
         int hueOffset = getHueOffset(panelHue, chosenHue);
         int nextColorHue = panelHue < chosenHue ? (chosenHue - hueOffset) % 360 : (chosenHue + hueOffset) % 360;
 
-        if (nextColorHue < 15 || nextColorHue >= 345) {
-            return "Red";
+        if (nextColorHue < 15) {
+            return "Low Red";
         } else if (nextColorHue < 45) {
             return "Orange";
         } else if (nextColorHue < 75) {
@@ -131,8 +133,10 @@ public class TextPanel extends JPanel {
             return "Violet";
         } else if (nextColorHue < 315) {
             return "Magenta";
-        } else {
+        } else if (nextColorHue < 345){
             return "Pink";
+        } else {
+            return "High Red";
         }
     }
 
@@ -146,8 +150,10 @@ public class TextPanel extends JPanel {
             return 30;
         } else if (hueDiffAbs <= 120){
             return 60;
-        } else {
+        } else if (hueDiffAbs <= 240){
             return 120;
+        } else {
+            return 240;
         }
     }
 

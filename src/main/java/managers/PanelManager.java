@@ -1,8 +1,12 @@
-package color_chooser.components.panels;
+package managers;
 
 import color_chooser.ColorChooser;
-import color_chooser.components.buttons.ButtonPanel;
-import managers.GameManager;
+import components.buttons.GameButtonPanel;
+import components.buttons.MenuButtonPanel;
+import components.panels.AttemptPanel;
+import components.panels.ColorPanel;
+import components.panels.ScorePanel;
+import components.panels.TextPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +18,9 @@ public class PanelManager {
     TextPanel textPanel;
     AttemptPanel attemptPanel;
     ScorePanel scorePanel;
-    ButtonPanel buttonPanel;
+    MenuButtonPanel menuButtonPanel;
+    GameButtonPanel gameButtonPanel;
+    JPanel topPanel;
     JPanel leftPanel;
     JPanel rightPanel;
     JPanel buttonHolder;
@@ -27,7 +33,9 @@ public class PanelManager {
         textPanel = new TextPanel();
         attemptPanel = new AttemptPanel();
         scorePanel = new ScorePanel();
-        buttonPanel = new ButtonPanel(gameManager, colorPanel, colorChooser, textPanel);
+        menuButtonPanel = new MenuButtonPanel();
+        gameButtonPanel = new GameButtonPanel(gameManager, colorPanel, colorChooser, textPanel);
+        topPanel = new JPanel(new BorderLayout());
         leftPanel = new JPanel(new BorderLayout());
         rightPanel = new JPanel(new BorderLayout());
         buttonHolder = new JPanel(new BorderLayout());
@@ -36,6 +44,8 @@ public class PanelManager {
 
     public void start() {
         SwingUtilities.invokeLater(() -> {
+            topPanel.add(menuButtonPanel, BorderLayout.WEST);
+
             leftPanel.add(colorPanel, BorderLayout.NORTH);
             leftPanel.add(scorePanel.build(), BorderLayout.SOUTH);
 
@@ -43,11 +53,12 @@ public class PanelManager {
             rightPanel.add(attemptPanel.build(), BorderLayout.CENTER);
             rightPanel.add(textPanel, BorderLayout.SOUTH);
 
-            buttonHolder.add(buttonPanel.getPanel(), BorderLayout.CENTER);
+            buttonHolder.add(gameButtonPanel.getPanel(), BorderLayout.CENTER);
 
             jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             jFrame.setLayout(new BorderLayout());
 
+            jFrame.add(topPanel, BorderLayout.NORTH);
             jFrame.add(leftPanel, BorderLayout.WEST);
             jFrame.add(rightPanel, BorderLayout.EAST);
             jFrame.add(buttonHolder, BorderLayout.SOUTH);
@@ -66,8 +77,8 @@ public class PanelManager {
         return textPanel;
     }
 
-    public ButtonPanel getButtonPanel() {
-        return buttonPanel;
+    public GameButtonPanel getButtonPanel() {
+        return gameButtonPanel;
     }
 
     public ScorePanel getScorePanel() {
@@ -79,7 +90,7 @@ public class PanelManager {
         scorePanel.reset();
         colorPanel.nextColor();
         textPanel.disableText();
-        buttonPanel.enableSubmitButton();
-        buttonPanel.reset();
+        gameButtonPanel.enableSubmitButton();
+        gameButtonPanel.reset();
     }
 }

@@ -1,4 +1,4 @@
-package color_chooser.components.labels;
+package components.labels;
 
 import javax.swing.*;
 import java.awt.*;

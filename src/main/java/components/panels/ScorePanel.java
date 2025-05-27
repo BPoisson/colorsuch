@@ -1,6 +1,6 @@
-package color_chooser.components.panels;
+package components.panels;
 
-import color_chooser.components.labels.OutlinedLabel;
+import components.labels.OutlinedLabel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package color_chooser.components.panels;
+package components.panels;
 
 import java.awt.*;
 import java.util.Random;

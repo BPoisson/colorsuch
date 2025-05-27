@@ -1,13 +1,13 @@
-package color_chooser.components.buttons;
+package components.buttons;
 
 import color_chooser.ColorChooser;
-import color_chooser.components.panels.ColorPanel;
-import color_chooser.components.panels.TextPanel;
+import components.panels.ColorPanel;
+import components.panels.TextPanel;
 import managers.GameManager;
 
 import javax.swing.*;
 
-public class ButtonPanel extends JPanel {
+public class GameButtonPanel extends JPanel {
     int skips;
     boolean skip;
     final int MAX_SKIPS = 2;
@@ -19,7 +19,7 @@ public class ButtonPanel extends JPanel {
     TextPanel textPanel;
     String nextColorButtonText;
 
-    public ButtonPanel(GameManager gameManager, ColorPanel colorPanel, ColorChooser colorChooser, TextPanel textPanel) {
+    public GameButtonPanel(GameManager gameManager, ColorPanel colorPanel, ColorChooser colorChooser, TextPanel textPanel) {
         skips = MAX_SKIPS;
         skip = true;
         nextColorButtonText = "Next Color";

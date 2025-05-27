@@ -1,7 +1,5 @@
 package managers;
 
-import color_chooser.ScoreManager;
-import color_chooser.components.panels.PanelManager;
 import data_structures.Pair;
 
 import javax.swing.*;

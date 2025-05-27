@@ -1,4 +1,4 @@
-package color_chooser.components.panels;
+package components.panels;
 
 import javax.swing.*;
 import java.awt.*;

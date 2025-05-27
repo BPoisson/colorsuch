@@ -1,4 +1,4 @@
-package color_chooser.components.sliders;
+package components.sliders;
 
 import javax.swing.plaf.basic.BasicSliderUI;
 import java.awt.*;

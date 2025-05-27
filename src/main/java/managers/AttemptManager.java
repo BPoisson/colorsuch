@@ -1,6 +1,6 @@
 package managers;
 
-import color_chooser.components.panels.PanelManager;
+import constants.Constants;
 import data_structures.Pair;
 
 public class AttemptManager {
@@ -51,27 +51,23 @@ public class AttemptManager {
         int saturationDiffAbs = getSaturationDiffAbs(panelColorInt[1], choiceColorInt[1]);
         int brightnessDiffAbs = getBrightnessDiffAbs(panelColorInt[2], choiceColorInt[2]);
 
-        return hueDiffAbs <= 2 && saturationDiffAbs == 0 && brightnessDiffAbs == 0;
+        return hueDiffAbs <= Constants.PERFECT_HUE_DIFF
+                && saturationDiffAbs <= Constants.PERFECT_SATURATION_DIFF
+                && brightnessDiffAbs <= Constants.PERFECT_BRIGHTNESS_DIFF;
     }
 
     public int getHueDiffAbs(int panelHue, int choiceHue) {
         int hueDiff = panelHue - choiceHue;
-        int hueDiffAbs = Math.abs(hueDiff);
-
-        return hueDiffAbs;
+        return Math.abs(hueDiff);
     }
 
     public int getSaturationDiffAbs(int panelSaturation, int choiceSaturation) {
         int saturationDiff = panelSaturation - choiceSaturation;
-        int saturationDiffAbs = Math.abs(saturationDiff);
-
-        return saturationDiffAbs;
+        return Math.abs(saturationDiff);
     }
 
     public int getBrightnessDiffAbs(int panelBrightness, int choiceBrightness) {
         int brightnessDiff = panelBrightness - choiceBrightness;
-        int brightnessDiffAbs = Math.abs(brightnessDiff);
-
-        return brightnessDiffAbs;
+        return Math.abs(brightnessDiff);
     }
 }

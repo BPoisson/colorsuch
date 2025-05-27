@@ -1,10 +1,10 @@
 package color_chooser;
 
-import color_chooser.components.panels.SatValBox;
-import color_chooser.components.sliders.GradientSliderUI;
-import color_chooser.components.sliders.HueSlider;
-import color_chooser.components.sliders.SaturationSlider;
-import color_chooser.components.sliders.BrightnessSlider;
+import components.panels.SatValBox;
+import components.sliders.GradientSliderUI;
+import components.sliders.HueSlider;
+import components.sliders.SaturationSlider;
+import components.sliders.BrightnessSlider;
 
 import javax.swing.*;
 import java.awt.*;

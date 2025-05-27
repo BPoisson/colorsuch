@@ -1,4 +1,4 @@
-package color_chooser.components.sliders;
+package components.sliders;
 
 import color_chooser.ColorChooser;
 
