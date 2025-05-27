@@ -1,10 +1,10 @@
 package managers;
 
-public class GameRound {
+public class Round {
     int score;
     float[] chosenColorHSB;
 
-    public GameRound(int score, float[] chosenColorHSB) {
+    public Round(int score, float[] chosenColorHSB) {
         this.score = score;
         this.chosenColorHSB = chosenColorHSB;
     }

@@ -1,5 +1,6 @@
 package managers;
 
+import color_chooser.ScoreManager;
 import color_chooser.components.panels.PanelManager;
 import data_structures.Pair;
 
@@ -10,18 +11,20 @@ public class GameManager {
     int maxRounds;
     int roundIndex;
     int totalScore;
-    GameRound[] gameRounds;
+    Round[] rounds;
     PanelManager panelManager;
     AttemptManager attemptManager;
+    ScoreManager scoreManager;
 
     public GameManager() {
         skipsUsed = 0;
-        maxRounds = 10;
+        maxRounds = 3;
         roundIndex = 0;
         totalScore = 0;
-        gameRounds = new GameRound[maxRounds];
+        rounds = new Round[maxRounds];
         panelManager = new PanelManager(this);
         attemptManager = new AttemptManager(panelManager);
+        scoreManager = new ScoreManager();
     }
 
     public void play() {
@@ -52,7 +55,7 @@ public class GameManager {
     }
 
     private boolean addRound(int score, float[] choiceColorHSB) {
-        gameRounds[roundIndex] = new GameRound(score, choiceColorHSB);
+        rounds[roundIndex] = new Round(score, choiceColorHSB);
         roundIndex++;
 
         return roundIndex == maxRounds;
@@ -60,6 +63,7 @@ public class GameManager {
 
     private void handleGameOver() {
         JOptionPane.showMessageDialog(null, "Game Over.\nAverage Score: " + (totalScore / maxRounds));
+        scoreManager.saveRound(rounds);
 
         resetGame();
     }
@@ -67,7 +71,7 @@ public class GameManager {
     private void resetGame() {
         roundIndex = 0;
         totalScore = 0;
-        gameRounds = new GameRound[maxRounds];
+        rounds = new Round[maxRounds];
         attemptManager.resetAttempts();
 
         panelManager.resetAll();
