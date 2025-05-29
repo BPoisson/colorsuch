@@ -5,10 +5,10 @@ import constants.Constants;
 import javax.swing.*;
 import java.awt.*;
 
-public class TextPanel extends JPanel {
+public class ColorTextPanel extends JPanel {
     JTextArea textArea;
 
-    public TextPanel() {
+    public ColorTextPanel() {
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setFont(new Font("Arial", Font.BOLD, 18));

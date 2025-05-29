@@ -34,7 +34,7 @@ public class AttemptManager {
 
     private void addAttempt(float[] panelColorHSB, float[] choiceColorHSB) {
         panelManager.getAttemptPanel().addAttempt(choiceColorHSB);
-        panelManager.getTextPanel().createText(panelColorHSB, choiceColorHSB);
+        panelManager.getColorTextPanel().createText(panelColorHSB, choiceColorHSB);
     }
 
     public void resetAttempts() {

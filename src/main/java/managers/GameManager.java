@@ -6,21 +6,21 @@ import javax.swing.*;
 
 public class GameManager {
     int skipsUsed;
-    int maxRounds;
     int roundIndex;
     int totalScore;
     Round[] rounds;
     PanelManager panelManager;
     AttemptManager attemptManager;
     ScoreManager scoreManager;
+    final int MAX_SKIPS = 1;
+    final int MAX_ROUNDS = 5;
 
     public GameManager() {
         skipsUsed = 0;
-        maxRounds = 5;
         roundIndex = 0;
         totalScore = 0;
-        rounds = new Round[maxRounds];
-        panelManager = new PanelManager(this);
+        rounds = new Round[MAX_ROUNDS];
+        panelManager = new PanelManager(this, MAX_SKIPS, MAX_ROUNDS);
         attemptManager = new AttemptManager(panelManager);
         scoreManager = new ScoreManager();
     }
@@ -56,11 +56,15 @@ public class GameManager {
         rounds[roundIndex] = new Round(score, choiceColorHSB);
         roundIndex++;
 
-        return roundIndex == maxRounds;
+        return roundIndex == MAX_ROUNDS;
+    }
+
+    public void incrementRound() {
+        panelManager.incrementRound();
     }
 
     private void handleGameOver() {
-        JOptionPane.showMessageDialog(null, String.format("Game Over.\nAverage Score: %.2f.", (float) totalScore / maxRounds));
+        JOptionPane.showMessageDialog(null, String.format("Game Over.\nAverage Score: %.2f.", (float) totalScore / MAX_ROUNDS));
         scoreManager.saveRound(rounds);
 
         resetGame();
@@ -69,7 +73,7 @@ public class GameManager {
     private void resetGame() {
         roundIndex = 0;
         totalScore = 0;
-        rounds = new Round[maxRounds];
+        rounds = new Round[MAX_ROUNDS];
         attemptManager.resetAttempts();
 
         panelManager.resetAll();

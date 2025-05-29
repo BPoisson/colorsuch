@@ -3,10 +3,8 @@ package managers;
 import color_chooser.ColorChooser;
 import components.buttons.GameButtonPanel;
 import components.buttons.MenuButtonPanel;
-import components.panels.AttemptPanel;
-import components.panels.ColorPanel;
-import components.panels.ScorePanel;
-import components.panels.TextPanel;
+import components.labels.RoundTextLabel;
+import components.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,26 +13,32 @@ public class PanelManager {
     GameManager gameManager;
     ColorPanel colorPanel;
     ColorChooser colorChooser;
-    TextPanel textPanel;
+    ColorTextPanel colorTextPanel;
+    RoundTextLabel roundTextLabel;
     AttemptPanel attemptPanel;
     ScorePanel scorePanel;
     MenuButtonPanel menuButtonPanel;
     GameButtonPanel gameButtonPanel;
+    JPanel topMenuPanel;
+    JPanel topLabelPanel;
     JPanel topPanel;
     JPanel leftPanel;
     JPanel rightPanel;
     JPanel buttonHolder;
     JFrame jFrame;
 
-    public PanelManager(GameManager gameManager) {
+    public PanelManager(GameManager gameManager, final int MAX_SKIPS, final int MAX_ROUNDS) {
         this.gameManager = gameManager;
         colorPanel = new ColorPanel();
         colorChooser = new ColorChooser();
-        textPanel = new TextPanel();
+        colorTextPanel = new ColorTextPanel();
+        roundTextLabel = new RoundTextLabel(MAX_ROUNDS);
         attemptPanel = new AttemptPanel();
         scorePanel = new ScorePanel();
         menuButtonPanel = new MenuButtonPanel();
-        gameButtonPanel = new GameButtonPanel(gameManager, colorPanel, colorChooser, textPanel);
+        gameButtonPanel = new GameButtonPanel(gameManager, colorPanel, colorChooser, colorTextPanel, MAX_SKIPS);
+        topMenuPanel = new JPanel(new BorderLayout());
+        topLabelPanel = new JPanel(new BorderLayout());
         topPanel = new JPanel(new BorderLayout());
         leftPanel = new JPanel(new BorderLayout());
         rightPanel = new JPanel(new BorderLayout());
@@ -44,14 +48,17 @@ public class PanelManager {
 
     public void start() {
         SwingUtilities.invokeLater(() -> {
-            topPanel.add(menuButtonPanel, BorderLayout.WEST);
+            topMenuPanel.add(menuButtonPanel, BorderLayout.WEST);
+            topLabelPanel.add(roundTextLabel, BorderLayout.CENTER);
+            topPanel.add(topMenuPanel, BorderLayout.NORTH);
+            topPanel.add(topLabelPanel, BorderLayout.SOUTH);
 
             leftPanel.add(colorPanel, BorderLayout.NORTH);
             leftPanel.add(scorePanel.build(), BorderLayout.SOUTH);
 
             rightPanel.add(colorChooser.getPanel(), BorderLayout.NORTH);
             rightPanel.add(attemptPanel.build(), BorderLayout.CENTER);
-            rightPanel.add(textPanel, BorderLayout.SOUTH);
+            rightPanel.add(colorTextPanel, BorderLayout.SOUTH);
 
             buttonHolder.add(gameButtonPanel.getPanel(), BorderLayout.CENTER);
 
@@ -73,8 +80,12 @@ public class PanelManager {
         return attemptPanel;
     }
 
-    public TextPanel getTextPanel() {
-        return textPanel;
+    public ColorTextPanel getColorTextPanel() {
+        return colorTextPanel;
+    }
+
+    public void incrementRound() {
+        roundTextLabel.incrementRound();
     }
 
     public GameButtonPanel getButtonPanel() {
@@ -89,7 +100,8 @@ public class PanelManager {
         attemptPanel.reset();
         scorePanel.reset();
         colorPanel.nextColor();
-        textPanel.disableText();
+        colorTextPanel.disableText();
+        roundTextLabel.reset();
         gameButtonPanel.enableSubmitButton();
         gameButtonPanel.reset();
     }
