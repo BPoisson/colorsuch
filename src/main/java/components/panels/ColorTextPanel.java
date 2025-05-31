@@ -109,7 +109,7 @@ public class ColorTextPanel extends JPanel {
 
     public String getNextColorName(int panelHue, int chosenHue) {
         int hueOffset = getHueOffset(panelHue, chosenHue);
-        int nextColorHue = panelHue < chosenHue ? (chosenHue - hueOffset) % 360 : (chosenHue + hueOffset) % 360;
+        int nextColorHue = panelHue < chosenHue ? Math.max(0, chosenHue - hueOffset) : Math.min(360, chosenHue + hueOffset);
 
         if (nextColorHue < 15) {
             return "Low Red";
@@ -126,9 +126,9 @@ public class ColorTextPanel extends JPanel {
         } else if (nextColorHue < 195) {
             return "Cyan";
         } else if (nextColorHue < 225) {
-            return "Sky Blue";
-        } else if (nextColorHue < 255) {
             return "Blue";
+        } else if (nextColorHue < 255) {
+            return "Indigo";
         } else if (nextColorHue < 285) {
             return "Violet";
         } else if (nextColorHue < 315) {

@@ -4,29 +4,31 @@ import constants.Constants;
 import data_structures.Pair;
 
 public class AttemptManager {
+    final int MAX_ATTEMPTS;
     int attemptNumber;
     float[][] attempts;
     PanelManager panelManager;
 
-    public AttemptManager(PanelManager panelManager) {
+    public AttemptManager(PanelManager panelManager, final int MAX_ATTEMPTS) {
+        this.MAX_ATTEMPTS = MAX_ATTEMPTS;
         attemptNumber = 0;
-        attempts = new float[8][3];
+        attempts = new float[MAX_ATTEMPTS][3];
         this.panelManager = panelManager;
     }
 
     public Pair<Boolean, Integer> submitAttempt(float[] panelColorHSB, float[] choiceColorHSB) {
         boolean isPerfect = checkAttempt(panelColorHSB, choiceColorHSB);
 
-        if (attemptNumber == 8) {
+        if (attemptNumber == MAX_ATTEMPTS) {
             attemptNumber = 0;
-            attempts = new float[8][3];
+            attempts = new float[MAX_ATTEMPTS][3];
             resetAttempts();
         }
         attempts[attemptNumber] = choiceColorHSB;
         attemptNumber++;
         addAttempt(panelColorHSB, choiceColorHSB);
 
-        if (attemptNumber == 8 || isPerfect) {
+        if (attemptNumber == MAX_ATTEMPTS || isPerfect) {
             return new Pair<>(true, attemptNumber);
         }
         return new Pair<>(false, 0);
@@ -39,7 +41,7 @@ public class AttemptManager {
 
     public void resetAttempts() {
         attemptNumber = 0;
-        attempts = new float[8][3];
+        attempts = new float[MAX_ATTEMPTS][3];
         panelManager.getAttemptPanel().reset();
     }
 

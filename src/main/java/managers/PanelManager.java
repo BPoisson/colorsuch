@@ -27,7 +27,7 @@ public class PanelManager {
     JPanel buttonHolder;
     JFrame jFrame;
 
-    public PanelManager(GameManager gameManager, final int MAX_SKIPS, final int MAX_ROUNDS) {
+    public PanelManager(GameManager gameManager, final int MAX_SKIPS, final int MAX_ROUNDS, final int MAX_ATTEMPTS) {
         this.gameManager = gameManager;
         colorPanel = new ColorPanel();
         colorChooser = new ColorChooser();
@@ -36,7 +36,7 @@ public class PanelManager {
         attemptPanel = new AttemptPanel();
         scorePanel = new ScorePanel();
         menuButtonPanel = new MenuButtonPanel();
-        gameButtonPanel = new GameButtonPanel(gameManager, colorPanel, colorChooser, colorTextPanel, MAX_SKIPS);
+        gameButtonPanel = new GameButtonPanel(gameManager, colorPanel, colorChooser, colorTextPanel, MAX_SKIPS, MAX_ATTEMPTS);
         topMenuPanel = new JPanel(new BorderLayout());
         topLabelPanel = new JPanel(new BorderLayout());
         topPanel = new JPanel(new BorderLayout());

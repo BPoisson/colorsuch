@@ -14,14 +14,15 @@ public class GameManager {
     ScoreManager scoreManager;
     final int MAX_SKIPS = 1;
     final int MAX_ROUNDS = 5;
+    final int MAX_ATTEMPTS = 8;
 
     public GameManager() {
         skipsUsed = 0;
         roundIndex = 0;
         totalScore = 0;
         rounds = new Round[MAX_ROUNDS];
-        panelManager = new PanelManager(this, MAX_SKIPS, MAX_ROUNDS);
-        attemptManager = new AttemptManager(panelManager);
+        panelManager = new PanelManager(this, MAX_SKIPS, MAX_ROUNDS, MAX_ATTEMPTS);
+        attemptManager = new AttemptManager(panelManager, MAX_ATTEMPTS);
         scoreManager = new ScoreManager();
     }
 

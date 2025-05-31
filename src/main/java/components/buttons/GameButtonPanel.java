@@ -9,8 +9,10 @@ import javax.swing.*;
 
 public class GameButtonPanel extends JPanel {
     int skips;
+    final int MAX_SKIPS;
+    int attempts;
+    final int MAX_ATTEMPTS;
     boolean skip;
-    int maxSkips;
     GameManager gameManager;
     JButton nextColorButton;
     JButton submitButton;
@@ -18,14 +20,18 @@ public class GameButtonPanel extends JPanel {
     ColorChooser colorChooser;
     ColorTextPanel colorTextPanel;
     String nextColorButtonText;
+    String submitButtonText;
 
-    public GameButtonPanel(GameManager gameManager, ColorPanel colorPanel, ColorChooser colorChooser, ColorTextPanel colorTextPanel, final int MAX_SKIPS) {
-        this.maxSkips = MAX_SKIPS;
+    public GameButtonPanel(GameManager gameManager, ColorPanel colorPanel, ColorChooser colorChooser, ColorTextPanel colorTextPanel, final int MAX_SKIPS, final int MAX_ATTEMPTS) {
         skips = MAX_SKIPS;
+        this.MAX_SKIPS = MAX_SKIPS;
         skip = true;
+        attempts = MAX_ATTEMPTS;
+        this.MAX_ATTEMPTS = MAX_ATTEMPTS;
         nextColorButtonText = "Next Color";
+        submitButtonText = "Submit";
         nextColorButton = new JButton(getNextColorButtonText());
-        submitButton = new JButton("Submit");
+        submitButton = new JButton(getSubmitButtonText());
         this.colorPanel = colorPanel;
         this.colorChooser = colorChooser;
         this.colorTextPanel = colorTextPanel;
@@ -35,9 +41,7 @@ public class GameButtonPanel extends JPanel {
             handleNextColorButtonClick();
         });
         submitButton.addActionListener(_ -> {
-            colorPanel.setRectangle(colorChooser.getColorHSB());
-            colorTextPanel.createText(colorPanel.getColorHSB(), colorChooser.getColorHSB());
-            gameManager.submitAttempt(colorPanel.getColorHSB(), colorChooser.getColorHSB());
+            handleSubmitButtonClick();
         });
     }
 
@@ -51,6 +55,7 @@ public class GameButtonPanel extends JPanel {
     }
 
     private void handleNextColorButtonClick() {
+        attempts = MAX_ATTEMPTS;
         colorTextPanel.disableText();
         colorPanel.disableRectangle();
         colorPanel.nextColor();
@@ -68,7 +73,16 @@ public class GameButtonPanel extends JPanel {
             disableNextColorButton();
         }
         nextColorButton.setText(getNextColorButtonText());
+        submitButton.setText(getSubmitButtonText());
         skip = true;
+    }
+
+    private void handleSubmitButtonClick() {
+        attempts--;
+        colorPanel.setRectangle(colorChooser.getColorHSB());
+        colorTextPanel.createText(colorPanel.getColorHSB(), colorChooser.getColorHSB());
+        gameManager.submitAttempt(colorPanel.getColorHSB(), colorChooser.getColorHSB());
+        submitButton.setText(getSubmitButtonText());
     }
 
     public void disableNextColorButton() {
@@ -93,8 +107,10 @@ public class GameButtonPanel extends JPanel {
 
     public void reset() {
         skip = true;
-        skips = maxSkips;
+        skips = MAX_SKIPS;
+        attempts = MAX_ATTEMPTS;
         nextColorButton.setText(getNextColorButtonText());
+        submitButton.setText(getSubmitButtonText());
 
         enableSubmitButton();
         enableNextColorButton();
@@ -105,5 +121,12 @@ public class GameButtonPanel extends JPanel {
             return String.format("%s (%d Skip)", nextColorButtonText, skips);
         }
         return String.format("%s (%d Skips)", nextColorButtonText, skips);
+    }
+
+    private String getSubmitButtonText() {
+        if (attempts == 1) {
+            return String.format("%s (%d Attempt Remaining)", submitButtonText, attempts);
+        }
+        return String.format("%s (%d Attempts Remaining)", submitButtonText, attempts);
     }
 }
