@@ -72,6 +72,7 @@ public class PanelManager {
 
             jFrame.pack();
             jFrame.setLocationRelativeTo(null);
+            jFrame.setResizable(false);
             jFrame.setVisible(true);
         });
     }

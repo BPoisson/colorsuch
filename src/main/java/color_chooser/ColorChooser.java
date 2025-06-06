@@ -14,17 +14,25 @@ public class ColorChooser {
     float hue;
     float saturation;
     float brightness;
+    int boxDimension;
     HueSlider hueSlider;
     SaturationSlider saturationSlider;
     BrightnessSlider brightnessSlider;
     SatValBox satValBox;
     JPanel colorChooserPanel;
+    JPanel chosenColorPanel;
 
     public ColorChooser() {
+        boxDimension = 30;
         hueSlider = new HueSlider(this);
         saturationSlider = new SaturationSlider(this);
         brightnessSlider = new BrightnessSlider(this);
         satValBox = new SatValBox(this);
+        chosenColorPanel = new JPanel(new BorderLayout());
+        chosenColorPanel.setPreferredSize(new Dimension(boxDimension, boxDimension));
+        chosenColorPanel.setPreferredSize(new Dimension(boxDimension, boxDimension));
+        chosenColorPanel.setMinimumSize(new Dimension(boxDimension, boxDimension));
+        chosenColorPanel.setMaximumSize(new Dimension(boxDimension, boxDimension));
 
         hueSlider.setUI(new GradientSliderUI(hueSlider));
         saturationSlider.setUI(new GradientSliderUI(saturationSlider));
@@ -44,6 +52,11 @@ public class ColorChooser {
 
         JPanel sliderPanel = new JPanel();
         sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
+
+        JPanel chosenColorWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
+        chosenColorWrapper.add(chosenColorPanel);
+        sliderPanel.add(chosenColorWrapper);
+
         sliderPanel.add(new JLabel("Hue") {{
             setFont(getFont().deriveFont(Font.BOLD));
             setForeground(Color.BLACK);
@@ -71,6 +84,7 @@ public class ColorChooser {
 
     private void updateColor() {
         color = Color.getHSBColor(hue, saturation, brightness);
+        chosenColorPanel.setBackground(Color.getHSBColor(hue, saturation, brightness));
         updateSliders();
     }
 
